@@ -6,6 +6,25 @@
     <title>@yield('title', 'Ensamble Curupayty — Atypu')</title>
     <meta name="description" content="@yield('meta_description', 'Colectivo orquestal autogestionado de creadores-intérpretes. No venimos a interpretar el pasado. Venimos a firmar el futuro.')">
     
+    <!-- Open Graph / WhatsApp / Facebook / Telegram -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:site_name" content="Ensamble Curupayty · Atypu">
+    <meta property="og:title" content="@yield('title', 'Ensamble Curupayty — Atypu')">
+    <meta property="og:description" content="@yield('meta_description', 'Colectivo orquestal autogestionado de creadores-intérpretes. No venimos a interpretar el pasado. Venimos a firmar el futuro.')">
+    <meta property="og:image" content="{{ asset('images/og_cover.jpg') }}">
+    <meta property="og:image:secure_url" content="{{ asset('images/og_cover.jpg') }}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="es_PY">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'Ensamble Curupayty — Atypu')">
+    <meta name="twitter:description" content="@yield('meta_description', 'Colectivo orquestal autogestionado de creadores-intérpretes. No venimos a interpretar el pasado. Venimos a firmar el futuro.')">
+    <meta name="twitter:image" content="{{ asset('images/og_cover.jpg') }}">
+
     <link rel="icon" type="image/png" href="{{ asset('images/logo_curupayty.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo_curupayty.png') }}">
     
