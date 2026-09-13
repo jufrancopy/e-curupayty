@@ -20,7 +20,10 @@
             <p class="constancia-subtitle">Ensamble Curupayty — Atypu</p>
 
             <div class="constancia-alert">
-                ✓ <strong>¡Registro completado con éxito!</strong> Tu firma manuscrita digital y datos han sido incorporados al padrón oficial de socios creadores.
+                ✓ <strong>¡Registro completado con éxito!</strong> Tu firma manuscrita digital y datos han sido incorporados al padrón oficial de socios creadores. 
+                <span style="display: block; margin-top: 6px; color: #cbd5e1; font-size: 0.88rem;">
+                    ✉️ Te hemos enviado una copia oficial del Acta con tu <strong>certificado en imagen de alta resolución</strong> a tu correo: <strong>{{ $firmante->user->email ?? 'tu correo' }}</strong>.
+                </span>
             </div>
 
             <!-- Ficha de Datos del Firmante -->
@@ -74,12 +77,21 @@
             </div>
 
             <!-- Acciones -->
-            <div class="constancia-actions">
-                <button onclick="window.print()" class="btn-outline">
-                    🖨️ Imprimir / Guardar en PDF
+            <div class="constancia-actions" style="display: flex; gap: 0.85rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                <a href="{{ route('acta.descargar_imagen', $firmante->codigo_verificacion) }}" class="btn-gold" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                    <i class="fas fa-file-image"></i> Descargar Imagen Certificada (PNG)
+                </a>
+                <button onclick="window.print()" class="btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-print"></i> Imprimir / Guardar en PDF
                 </button>
-                <a href="{{ route('catalogo.index') }}" class="btn-gold">
-                    🎻 Explorar Catálogo de Obras
+                <form action="{{ route('acta.reenviar_correo', $firmante->codigo_verificacion) }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <i class="fas fa-envelope"></i> Reenviar a mi Correo
+                    </button>
+                </form>
+                <a href="{{ route('catalogo.index') }}" class="btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                    <i class="fas fa-music"></i> Catálogo de Obras
                 </a>
             </div>
 

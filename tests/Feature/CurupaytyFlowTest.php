@@ -69,6 +69,39 @@ class CurupaytyFlowTest extends TestCase
         ]);
     }
 
+    public function test_touch_signature_sends_email_with_certificate(): void
+    {
+        \Illuminate\Support\Facades\Mail::fake();
+
+        $sampleSignatureBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAAgCAYAAABzOcvDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA';
+
+        $response = $this->post('/firma-acta', [
+            'nombre' => 'Rodrigo',
+            'apellido' => 'Vargas',
+            'cedula' => '5123987',
+            'email' => 'rodrigo.vargas@test.com',
+            'direccion' => 'Palma 450',
+            'ciudad' => 'Asunción',
+            'instrumento' => 'Compositor',
+            'sueno_musical' => 'Estrenar sinfonías nacionales.',
+            'firma_digital' => $sampleSignatureBase64,
+        ]);
+
+        $response->assertStatus(302);
+
+        \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\ActaFundacionalFirmadaMail::class, function ($mail) {
+            return $mail->hasTo('rodrigo.vargas@test.com');
+        });
+
+        $firmante = FirmanteActa::where('cedula', '5123987')->first();
+        $this->assertNotNull($firmante);
+
+        // Test downloading certificate image
+        $downloadResponse = $this->get("/acta/{$firmante->codigo_verificacion}/imagen");
+        $downloadResponse->assertStatus(200);
+        $downloadResponse->assertHeader('Content-Type', 'image/png');
+    }
+
     public function test_admin_dashboard_and_acta_oficial(): void
     {
         $admin = User::where('email', 'admin@curupayty.com')->first();

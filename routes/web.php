@@ -16,6 +16,8 @@ Route::post('/firma-acta', [LandingController::class, 'storeFirma'])->name('acta
 Route::post('/acta/firmar', [LandingController::class, 'storeFirma'])->name('firma.store');
 Route::get('/firma-confirmacion/{codigo}', [LandingController::class, 'confirmacion'])->name('acta.confirmacion');
 Route::get('/acta/confirmacion/{codigo}', [LandingController::class, 'confirmacion'])->name('firma.confirmacion');
+Route::get('/acta/{codigo}/imagen', [LandingController::class, 'descargarImagen'])->name('acta.descargar_imagen');
+Route::post('/acta/{codigo}/reenviar-correo', [LandingController::class, 'reenviarCorreo'])->name('acta.reenviar_correo');
 
 // Documentos Institucionales CMS (Manifiesto, Estatuto, Asamblea)
 Route::get('/documento/{slug}', [LandingController::class, 'pagina'])->name('pagina.show');

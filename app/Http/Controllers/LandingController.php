@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ActaFundacionalFirmadaMail;
 use App\Models\FirmanteActa;
 use App\Models\Pagina;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\ActaImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class LandingController extends Controller
@@ -71,11 +75,18 @@ class LandingController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
+        // 4. Enviar Acta Oficial con Certificado Gráfico por Correo
+        try {
+            Mail::to($user->email)->send(new ActaFundacionalFirmadaMail($firmante));
+        } catch (\Exception $e) {
+            Log::error("Error al enviar correo del acta firmada a {$user->email}: " . $e->getMessage());
+        }
+
         // Iniciar sesión
         Auth::login($user);
 
         return redirect()->route('firma.confirmacion', ['codigo' => $codigoVerificacion])
-            ->with('success', '¡Has firmado exitosamente el Acta Fundacional del Ensamble Curupayty!');
+            ->with('success', '¡Has firmado exitosamente el Acta Fundacional! Te hemos enviado una copia oficial con tu certificado a tu correo.');
     }
 
     public function confirmacion($codigo)
@@ -83,6 +94,30 @@ class LandingController extends Controller
         $firmante = FirmanteActa::where('codigo_verificacion', $codigo)->firstOrFail();
         $totalFirmantes = FirmanteActa::count();
         return view('landing.confirmacion', compact('firmante', 'totalFirmantes'));
+    }
+
+    public function descargarImagen($codigo)
+    {
+        $firmante = FirmanteActa::where('codigo_verificacion', $codigo)->firstOrFail();
+        $service = new ActaImageService();
+        $path = $service->generate($firmante);
+
+        return response()->download($path, "Acta_Curupayty_{$firmante->codigo_verificacion}.png", [
+            'Content-Type' => 'image/png',
+        ]);
+    }
+
+    public function reenviarCorreo($codigo)
+    {
+        $firmante = FirmanteActa::where('codigo_verificacion', $codigo)->firstOrFail();
+        
+        try {
+            Mail::to($firmante->user->email)->send(new ActaFundacionalFirmadaMail($firmante));
+            return back()->with('success', "Se ha reenviado el Acta Fundacional con tu certificado gráfico a {$firmante->user->email}.");
+        } catch (\Exception $e) {
+            Log::error("Error reenviando acta a {$firmante->user->email}: " . $e->getMessage());
+            return back()->with('error', "No se pudo reenviar el correo en este momento. Por favor verifica más tarde.");
+        }
     }
 
     public function pagina($slug)
