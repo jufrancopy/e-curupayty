@@ -54,6 +54,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::put('/roles/{id}', [RolesController::class, 'update'])->name('roles.update');
     Route::post('/roles/{id}/permisos', [RolesController::class, 'update'])->name('roles.sync_permissions');
     Route::post('/roles/assign', [RolesController::class, 'assignUserRole'])->name('roles.assign');
+    Route::post('/roles/create-user', [RolesController::class, 'createUser'])->name('roles.create_user');
 
     // Obras y Catálogo (CRUD)
     Route::resource('obras', ObrasController::class);

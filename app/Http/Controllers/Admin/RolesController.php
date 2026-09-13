@@ -75,4 +75,25 @@ class RolesController extends Controller
 
         return back()->with('success', "Roles del usuario {$user->name} actualizados.");
     }
+
+    public function createUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:150|unique:users,email',
+            'password' => 'required|string|min:6',
+            'roles' => 'required|array',
+            'roles.*' => 'exists:roles,id',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+        ]);
+
+        $user->roles()->sync($validated['roles']);
+
+        return back()->with('success', "Usuario '{$user->name}' ({$user->email}) creado y asignado exitosamente.");
+    }
 }

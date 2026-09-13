@@ -106,7 +106,7 @@ class CurupaytyFlowTest extends TestCase
 
     public function test_admin_dashboard_and_acta_oficial(): void
     {
-        $admin = User::where('email', 'admin@curupayty.com')->first();
+        $admin = User::where('email', 'jucfra23@gmail.com')->first();
         $this->assertNotNull($admin);
 
         // Dashboard

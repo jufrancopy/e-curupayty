@@ -63,13 +63,30 @@ class DatabaseSeeder extends Seeder
 
         // 3. Usuario Administrador Principal
         $admin = User::firstOrCreate(
-            ['email' => 'admin@curupayty.com'],
+            ['email' => 'jucfra23@gmail.com'],
             [
-                'name' => 'Administrador Curupayty',
+                'name' => 'Julio Franco',
                 'password' => Hash::make('curupayty2026'),
             ]
         );
         $admin->roles()->syncWithoutDetaching([$adminRole->id]);
+
+        // Registrar a Julio Franco en el Padrón de Firmantes con su CI
+        FirmanteActa::firstOrCreate(
+            ['cedula' => '3458435'],
+            [
+                'user_id' => $admin->id,
+                'nombre' => 'Julio',
+                'apellido' => 'Franco',
+                'direccion' => 'Asunción',
+                'ciudad' => 'Asunción',
+                'instrumento' => 'Director General / Fundador',
+                'sueno_musical' => 'Consolidar el primer colectivo orquestal autogestionado de creadores-intérpretes del Paraguay.',
+                'codigo_verificacion' => 'CPY-FUNDADOR-001',
+                'firma_digital' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAA=',
+                'estado' => 'ratificado',
+            ]
+        );
 
         // 4. Usuario Creador de Muestra
         $creador = User::firstOrCreate(
