@@ -56,15 +56,41 @@ class ActaImageService
             imageline($im, $x1, $y1, $x1, $y2, $cGoldLight);
         }
 
-        // Fuentes
-        $fontTitle = '/System/Library/Fonts/Supplemental/Georgia Bold.ttf';
-        $fontSerif = '/System/Library/Fonts/Supplemental/Georgia.ttf';
-        $fontSansBold = '/System/Library/Fonts/Supplemental/Arial Bold.ttf';
-        $fontSans = '/System/Library/Fonts/Supplemental/Arial.ttf';
+        // Fuentes TrueType empaquetadas en el proyecto (100% compatibles con Linux/Ubuntu y macOS)
+        $fontTitle = resource_path('fonts/Cinzel-Bold.ttf');
+        $fontSans = resource_path('fonts/Outfit-Regular.ttf');
+        $fontSansBold = resource_path('fonts/Cinzel-Bold.ttf');
+        $fontSerif = resource_path('fonts/Outfit-Regular.ttf');
 
-        // Fallbacks si no existen
-        if (!file_exists($fontTitle)) $fontTitle = $fontSansBold;
-        if (!file_exists($fontSerif)) $fontSerif = $fontSans;
+        // Fallback para servidores Linux si no estuvieran en resources/fonts
+        if (!file_exists($fontTitle)) {
+            $linuxFonts = [
+                '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
+                '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
+                '/usr/share/fonts/truetype/freefont/FreeSansBold.ttf',
+            ];
+            foreach ($linuxFonts as $lf) {
+                if (file_exists($lf)) {
+                    $fontTitle = $lf;
+                    $fontSansBold = $lf;
+                    break;
+                }
+            }
+        }
+        if (!file_exists($fontSans)) {
+            $linuxFontsSans = [
+                '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+                '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
+                '/usr/share/fonts/truetype/freefont/FreeSans.ttf',
+            ];
+            foreach ($linuxFontsSans as $lf) {
+                if (file_exists($lf)) {
+                    $fontSans = $lf;
+                    $fontSerif = $lf;
+                    break;
+                }
+            }
+        }
 
         // 3. Encabezado Oficial Soberano
         $txt1 = "REPÚBLICA DEL PARAGUAY";

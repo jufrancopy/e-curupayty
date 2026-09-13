@@ -74,12 +74,14 @@ class CurupaytyFlowTest extends TestCase
         \Illuminate\Support\Facades\Mail::fake();
 
         $sampleSignatureBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAAgCAYAAABzOcvDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA';
+        $testEmail = 'firmante_' . uniqid() . '@test.com';
+        $testCedula = (string) rand(6000000, 7999999);
 
         $response = $this->post('/firma-acta', [
             'nombre' => 'Rodrigo',
             'apellido' => 'Vargas',
-            'cedula' => '5123987',
-            'email' => 'rodrigo.vargas@test.com',
+            'cedula' => $testCedula,
+            'email' => $testEmail,
             'direccion' => 'Palma 450',
             'ciudad' => 'Asunción',
             'instrumento' => 'Compositor',
@@ -89,11 +91,11 @@ class CurupaytyFlowTest extends TestCase
 
         $response->assertStatus(302);
 
-        \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\ActaFundacionalFirmadaMail::class, function ($mail) {
-            return $mail->hasTo('rodrigo.vargas@test.com');
+        \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\ActaFundacionalFirmadaMail::class, function ($mail) use ($testEmail) {
+            return $mail->hasTo($testEmail);
         });
 
-        $firmante = FirmanteActa::where('cedula', '5123987')->first();
+        $firmante = FirmanteActa::where('cedula', $testCedula)->first();
         $this->assertNotNull($firmante);
 
         // Test downloading certificate image
