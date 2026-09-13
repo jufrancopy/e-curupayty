@@ -1,0 +1,214 @@
+{
+  "project": "ENSAMBLE CURUPAYTY — ATYPU ARANDU",
+  "theme": {
+    "bg_dark": "#090b0e",
+    "bg_card": "#121620",
+    "card_border": "#283244",
+    "accent_gold": "#e5a93c",
+    "accent_gold_glow": "#f39c12",
+    "accent_red": "#e74c3c",
+    "accent_crimson": "#9b111e",
+    "text_primary": "#ffffff",
+    "text_secondary": "#a4b0be",
+    "text_muted": "#57606f"
+  },
+  "scenes": [
+    {
+      "id": "fast_1_mentira",
+      "tag": "MANIFIESTO DE RUPTURA",
+      "title": "LA MENTIRA CÓMODA",
+      "subtitle": "EL VIEJO SISTEMA",
+      "emphasis": "ESPERAR EL PERMISO DEL DIRECTOR",
+      "body": "Para que nuestra música tenga un lugar en el repertorio.",
+      "cut_start": 0.0,
+      "cut_end": 10.4,
+      "layout": "quote"
+    },
+    {
+      "id": "fast_2_padrino",
+      "tag": "BASTA DE PRIVILEGIOS",
+      "title": "SER AMIGO DEL DIRECTOR",
+      "subtitle": "EL FILTRO DEL PODER",
+      "emphasis": "COMO SI EL TALENTO NO ALCANZARA SIN UN PADRINO",
+      "body": "Generaciones de músicos talentosos silenciados.",
+      "cut_start": 10.4,
+      "cut_end": 17.7,
+      "layout": "warning"
+    },
+    {
+      "id": "fast_3_desterrar",
+      "tag": "PUNTO DE QUIEBRE",
+      "title": "LLEGÓ EL MOMENTO",
+      "subtitle": "RUPTURA CON EL PASADO",
+      "emphasis": "DESTERRAR ESTA MALA PRÁCTICA",
+      "body": "Te proponemos formar parte de algo nuevo.",
+      "cut_start": 17.7,
+      "cut_end": 24.8,
+      "layout": "focus"
+    },
+    {
+      "id": "fast_4_curupayty",
+      "tag": "HISTORIA & IDENTIDAD · 1866",
+      "title": "ENSAMBLE CURUPAYTY",
+      "subtitle": "ATYPU ARANDU",
+      "emphasis": "LA MAYOR VICTORIA MILITAR DEL PARAGUAY",
+      "body": "Le pusimos ese nombre por una razón histórica.",
+      "cut_start": 24.8,
+      "cut_end": 31.0,
+      "layout": "hero"
+    },
+    {
+      "id": "fast_5_actitud",
+      "tag": "LA ACTITUD CURUPAYTY",
+      "title": "UN GRUPO BIEN PLANTADO",
+      "subtitle": "LO PEQUEÑO FRENTE A LO HEGEMÓNICO",
+      "emphasis": "LE GANA A UN MODELO VIEJO Y RETRÓGRADO",
+      "body": "No es una batalla de derrota: es prueba de victoria.",
+      "cut_start": 31.0,
+      "cut_end": 38.0,
+      "layout": "hero"
+    },
+    {
+      "id": "fast_6_no_dueno",
+      "tag": "AUTOGESTIÓN REAL",
+      "title": "ACÁ NO EXISTE DUEÑO",
+      "subtitle": "DESTIERRO DEL TENDOTA",
+      "emphasis": "CADA SOCIO LIDERA SU PROYECTO",
+      "body": "Nadie es amo de nadie. El poder rota por obra.",
+      "cut_start": 38.0,
+      "cut_end": 46.5,
+      "layout": "focus"
+    },
+    {
+      "id": "fast_7_creador",
+      "tag": "LIBERTAD DE CREACIÓN",
+      "title": "ARREGLA, ORQUESTA Y GRABA",
+      "subtitle": "EL PROYECTO COMO UNIDAD",
+      "emphasis": "ARMA SU CONCIERTO Y SU CATÁLOGO",
+      "body": "Solo obra inédita de los socios del ensamble.",
+      "cut_start": 46.5,
+      "cut_end": 53.4,
+      "layout": "quote"
+    },
+    {
+      "id": "fast_8_decision",
+      "tag": "AUTORIDAD ARTÍSTICA",
+      "title": "EL AUTOR DECIDE",
+      "subtitle": "MODELO PIXAR",
+      "emphasis": "ÉL ES QUIEN DECIDE SOBRE SU OBRA",
+      "body": "Mientras dura el proyecto, la última palabra es del creador.",
+      "cut_start": 53.4,
+      "cut_end": 59.7,
+      "layout": "focus"
+    },
+    {
+      "id": "fast_9_soporte",
+      "tag": "COMUNIDAD COLECTIVA",
+      "title": "SOPORTE REAL",
+      "subtitle": "TODA LA COMUNIDAD DETRÁS",
+      "emphasis": "SOPORTE REAL, NO PALMADITAS FALSAS",
+      "body": "Estructura, partituras, ensayos y producción organizada.",
+      "cut_start": 59.7,
+      "cut_end": 67.8,
+      "layout": "hero"
+    },
+    {
+      "id": "fast_10_regala",
+      "tag": "PRINCIPIO ECONÓMICO INNEGOCIABLE",
+      "title": "EL TALENTO NO SE REGALA",
+      "subtitle": "LA REGLA CENTRAL",
+      "emphasis": "TODO SE COBRA",
+      "body": "No somos beneficencia que aplaude y no alimenta.",
+      "cut_start": 67.8,
+      "cut_end": 73.8,
+      "layout": "warning"
+    },
+    {
+      "id": "fast_11_derechos",
+      "tag": "PROTECCIÓN LEGAL",
+      "title": "DINAPI · APA · AIE",
+      "subtitle": "FORMALIZACIÓN OBLIGATORIA",
+      "emphasis": "TODO SE REGISTRA Y SE DECLARA",
+      "body": "Derecho de autor y derechos conexos para cada socio.",
+      "cut_start": 73.8,
+      "cut_end": 81.2,
+      "layout": "stats_mini"
+    },
+    {
+      "id": "fast_12_plataformas",
+      "tag": "DISTRIBUCIÓN GLOBAL",
+      "title": "SPOTIFY & APPLE MUSIC",
+      "subtitle": "CATÁLOGO COMERCIAL Y CINE",
+      "emphasis": "TODA NUESTRA MÚSICA SE VENDE",
+      "body": "Licencias, partituras y streaming monetizado.",
+      "cut_start": 81.2,
+      "cut_end": 87.0,
+      "layout": "focus"
+    },
+    {
+      "id": "fast_13_soñador",
+      "tag": "NUNCA NADA GRATIS",
+      "title": "COMPOSITOR & ORQUESTADOR",
+      "subtitle": "CREADORES-INTÉRPRETES",
+      "emphasis": "SI SOS UN GRAN SOÑADOR...",
+      "body": "Músicos, arregladores, instrumentistas con obra propia.",
+      "cut_start": 87.0,
+      "cut_end": 96.2,
+      "layout": "hero"
+    },
+    {
+      "id": "fast_14_permiso",
+      "tag": "EL DESPERTAR",
+      "title": "¿CANSADO DE ESPERAR PERMISO?",
+      "subtitle": "SE ACABÓ LA ESPERA",
+      "emphasis": "CREÁ LO TUYO",
+      "body": "Nadie tiene que darte permiso para existir como creador.",
+      "cut_start": 96.2,
+      "cut_end": 102.3,
+      "layout": "warning"
+    },
+    {
+      "id": "fast_15_lugar",
+      "tag": "CONVOCATORIA ABIERTA",
+      "title": "ESTE ES TU LUGAR",
+      "subtitle": "COMUNIDAD AUTOGESTIONADA",
+      "emphasis": "SUMATE A ESTA GRAN COMUNIDAD",
+      "body": "Una sociedad económica de artistas que firman su futuro.",
+      "cut_start": 102.3,
+      "cut_end": 110.0,
+      "layout": "hero"
+    },
+    {
+      "id": "fast_16_acta",
+      "tag": "ACTA FUNDACIONAL",
+      "title": "FIRMÁ EL ACTA",
+      "subtitle": "ENSAMBLE CURUPAYTY",
+      "emphasis": "EL LINK ESTÁ EN LA DESCRIPCIÓN",
+      "body": "Convocatoria abierta para la primera camada de socios.",
+      "cut_start": 110.0,
+      "cut_end": 117.7,
+      "layout": "focus"
+    },
+    {
+      "id": "fast_17_cierre",
+      "tag": "DECLARACIÓN FINAL",
+      "title": "NO INTERPRETAMOS EL PASADO",
+      "subtitle": "ATYPU ARANDU",
+      "emphasis": "VENIMOS A FIRMAR EL FUTURO",
+      "body": "ENSAMBLE CURUPAYTY — 2026",
+      "cut_start": 117.7,
+      "cut_end": 126.36,
+      "layout": "hero"
+    }
+  ],
+  "presets": {
+    "locucion_real": [
+      "fast_1_mentira", "fast_2_padrino", "fast_3_desterrar",
+      "fast_4_curupayty", "fast_5_actitud", "fast_6_no_dueno",
+      "fast_7_creador", "fast_8_decision", "fast_9_soporte",
+      "fast_10_regala", "fast_11_derechos", "fast_12_plataformas",
+      "fast_13_soñador", "fast_14_permiso", "fast_15_lugar",
+      "fast_16_acta", "fast_17_cierre"
+    ]
+  }
+}
