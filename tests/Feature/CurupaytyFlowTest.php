@@ -139,4 +139,27 @@ class CurupaytyFlowTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Portal Institucional');
     }
+
+    public function test_admin_can_delete_firmante(): void
+    {
+        $admin = User::where('email', 'jucfra23@gmail.com')->first();
+        $this->assertNotNull($admin);
+
+        $firmante = FirmanteActa::create([
+            'nombre' => 'Para',
+            'apellido' => 'Borrar',
+            'cedula' => '99999999',
+            'ciudad' => 'Asunción',
+            'direccion' => 'Test',
+            'instrumento' => 'Violín',
+            'sueno_musical' => 'Test',
+            'firma_digital' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAA=',
+            'codigo_verificacion' => 'CPY-DEL-TEST',
+            'estado' => 'pendiente_asamblea',
+        ]);
+
+        $response = $this->actingAs($admin)->delete("/admin/firmantes/{$firmante->id}");
+        $response->assertRedirect('/admin/firmantes');
+        $this->assertDatabaseMissing('firmante_actas', ['id' => $firmante->id]);
+    }
 }

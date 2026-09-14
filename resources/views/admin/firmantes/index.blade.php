@@ -107,6 +107,13 @@
                                             <i class="fas {{ $firmante->estado_adhesion == 'verificado' ? 'fa-undo' : 'fa-check' }}"></i>
                                         </button>
                                     </form>
+                                    <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente la firma de {{ addslashes($firmante->nombre_completo) }} (CI: {{ $firmante->cedula }})?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger-xs" title="Eliminar Firma">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -220,6 +227,21 @@
 .table-actions {
     display: flex;
     gap: 0.35rem;
+}
+.btn-danger-xs {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+}
+.btn-danger-xs:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    color: #fff;
 }
 .mt-3 { margin-top: 1.25rem; }
 </style>

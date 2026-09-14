@@ -108,6 +108,20 @@
                     </button>
                 </form>
             </div>
+
+            <hr class="divider" style="margin-top:1.5rem;">
+
+            <div class="danger-zone" style="background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.25); border-radius:8px; padding:1.2rem;">
+                <h4 style="color:#ef4444; font-size:0.9rem; margin-bottom:0.4rem;"><i class="fas fa-exclamation-triangle"></i> Zona de Peligro</h4>
+                <p style="font-size:0.8rem; color:#cbd5e1; margin-bottom:0.85rem;">Elimina esta firma y su certificado del padrón oficial permanentemente.</p>
+                <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente la firma de {{ addslashes($firmante->nombre_completo) }} (CI: {{ $firmante->cedula }})? Esta acción no se puede deshacer.');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-block" style="background:#dc2626; color:#fff; border:none; padding:0.6rem; border-radius:6px; font-weight:600; cursor:pointer; width:100%; transition:background 0.2s;">
+                        <i class="fas fa-trash-alt"></i> Eliminar Firma del Padrón
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

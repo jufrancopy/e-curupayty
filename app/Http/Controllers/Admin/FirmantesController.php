@@ -50,12 +50,34 @@ class FirmantesController extends Controller
     {
         $firmante = FirmanteActa::findOrFail($id);
         $validated = $request->validate([
-            'estado' => 'required|in:pendiente_asamblea,ratificado,rechazado',
+            'estado' => 'required|in:pendiente_asamblea,ratificado,rechazado,pendiente,verificado',
         ]);
 
-        $firmante->update(['estado' => $validated['estado']]);
+        $estado = $validated['estado'];
+        if ($estado === 'verificado') $estado = 'ratificado';
+        if ($estado === 'pendiente') $estado = 'pendiente_asamblea';
 
-        return back()->with('success', "Estado del firmante actualizado a '{$validated['estado']}'.");
+        $firmante->update(['estado' => $estado]);
+
+        return back()->with('success', "Estado del firmante actualizado.");
+    }
+
+    public function destroy($id)
+    {
+        $firmante = FirmanteActa::findOrFail($id);
+        $nombreCompleto = $firmante->nombre_completo;
+
+        // Eliminar imagen del acta si existe en disco
+        $certificatePath = storage_path("app/public/actas/acta_firmada_{$firmante->codigo_verificacion}.png");
+        if (file_exists($certificatePath)) {
+            @unlink($certificatePath);
+        }
+
+        // Eliminar el registro del firmante
+        $firmante->delete();
+
+        return redirect()->route('admin.firmantes.index')
+            ->with('success', "La firma y registro de {$nombreCompleto} ha sido eliminada correctamente.");
     }
 
     public function exportarCsv(): StreamedResponse
