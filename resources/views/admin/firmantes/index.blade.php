@@ -107,6 +107,12 @@
                                             <i class="fas {{ $firmante->estado_adhesion == 'verificado' ? 'fa-undo' : 'fa-check' }}"></i>
                                         </button>
                                     </form>
+                                    <form action="{{ route('admin.firmantes.reenviar_correo', $firmante->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Reenviar correo del Acta Fundacional y credenciales a {{ addslashes($firmante->user->email ?? $firmante->email ?? $firmante->nombre_completo) }}?');">
+                                        @csrf
+                                        <button type="submit" class="btn-action-icon btn-email" title="Reenviar Acta y Credenciales">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </form>
                                     <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente la firma de {{ addslashes($firmante->nombre_completo) }} (CI: {{ $firmante->cedula }})?');">
                                         @csrf
                                         @method('DELETE')
@@ -270,6 +276,17 @@
 .btn-undo:hover {
     background: #f59e0b;
     color: #000;
+}
+.btn-email {
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+}
+.btn-email:hover {
+    background: #0284c7;
+    border-color: #0284c7;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
 }
 .btn-delete {
     background: rgba(239, 68, 68, 0.1);

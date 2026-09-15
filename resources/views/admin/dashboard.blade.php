@@ -117,6 +117,12 @@
                                         <a href="{{ route('admin.firmantes.show', $f->id) }}" class="btn-action-view" title="Ver Expediente">
                                             <i class="fas fa-eye"></i>
                                         </a>
+                                        <form action="{{ route('admin.firmantes.reenviar_correo', $f->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Reenviar correo del Acta Fundacional y credenciales de acceso a {{ addslashes($f->user->email ?? $f->email ?? $f->nombre_completo) }}?');">
+                                            @csrf
+                                            <button type="submit" class="btn-action-email" title="Reenviar Acta y Credenciales">
+                                                <i class="fas fa-paper-plane"></i>
+                                            </button>
+                                        </form>
                                         <form action="{{ route('admin.firmantes.destroy', $f->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Eliminar la firma de {{ addslashes($f->nombre_completo) }}?');">
                                             @csrf
                                             @method('DELETE')
@@ -395,6 +401,27 @@
     border-color: #ef4444;
     color: #fff;
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
+.btn-action-email {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.2s;
+}
+.btn-action-email:hover {
+    background: #0284c7;
+    border-color: #0284c7;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
 }
 
 .inst-item {

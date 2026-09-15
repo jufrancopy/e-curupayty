@@ -3,8 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ActaFundacionalFirmadaMail;
 use App\Models\FirmanteActa;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class FirmantesController extends Controller
@@ -60,6 +67,47 @@ class FirmantesController extends Controller
         $firmante->update(['estado' => $estado]);
 
         return back()->with('success', "Estado del firmante actualizado.");
+    }
+
+    public function reenviarCorreo($id)
+    {
+        $firmante = FirmanteActa::with('user')->findOrFail($id);
+
+        $user = $firmante->user;
+        $generatedPassword = 'CPY-' . rand(1000, 9999) . '!' . strtoupper(Str::random(3));
+
+        if (!$user) {
+            // Si no tiene usuario asociado previamente, crear la cuenta con su cédula o email
+            $email = $firmante->cedula . '@curupayty.org';
+            $user = User::firstOrCreate(
+                ['email' => $email],
+                [
+                    'name' => "{$firmante->nombre} {$firmante->apellido}",
+                    'password' => Hash::make($generatedPassword),
+                ]
+            );
+
+            $firmanteRole = Role::where('name', 'firmante')->first();
+            if ($firmanteRole && !$user->roles()->where('role_id', $firmanteRole->id)->exists()) {
+                $user->roles()->attach($firmanteRole->id);
+            }
+
+            $firmante->update(['user_id' => $user->id]);
+            $firmante->setRelation('user', $user);
+        } else {
+            // Actualizar la clave para que la credencial enviada sea 100% funcional
+            $user->update([
+                'password' => Hash::make($generatedPassword),
+            ]);
+        }
+
+        try {
+            Mail::to($user->email)->send(new ActaFundacionalFirmadaMail($firmante, $generatedPassword));
+            return back()->with('success', "¡Correo reenviado exitosamente a {$user->email}! Se generó la clave temporal: {$generatedPassword}");
+        } catch (\Exception $e) {
+            Log::error("Error al reenviar acta a {$user->email}: " . $e->getMessage());
+            return back()->with('error', "No se pudo enviar el correo a {$user->email}. Detalle: " . $e->getMessage());
+        }
     }
 
     public function destroy($id)

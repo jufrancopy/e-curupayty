@@ -109,6 +109,21 @@
                 </form>
             </div>
 
+            <div class="status-action-box" style="background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px; padding: 1.2rem; margin-top: 1.5rem;">
+                <h4 style="color: #38bdf8; font-size: 0.9rem; margin-bottom: 0.4rem;">
+                    <i class="fas fa-paper-plane"></i> Notificación por Correo & Credenciales
+                </h4>
+                <p style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 0.85rem; line-height: 1.5;">
+                    Reenvía el Acta Fundacional oficial junto al certificado gráfico en alta resolución y una nueva clave única provisional de acceso al sistema (destinatario: <strong>{{ $firmante->user->email ?? $firmante->email ?? 'No registrado' }}</strong>).
+                </p>
+                <form action="{{ route('admin.firmantes.reenviar_correo', $firmante->id) }}" method="POST" onsubmit="return confirm('¿Reenviar correo oficial a {{ addslashes($firmante->user->email ?? $firmante->email ?? $firmante->nombre_completo) }}?');">
+                    @csrf
+                    <button type="submit" class="btn btn-block" style="background: #0284c7; color: #fff; border: none; padding: 0.65rem; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <i class="fas fa-paper-plane"></i> Reenviar Acta y Credenciales
+                    </button>
+                </form>
+            </div>
+
             <hr class="divider" style="margin-top:1.5rem;">
 
             <div class="danger-zone" style="background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.25); border-radius:8px; padding:1.2rem;">

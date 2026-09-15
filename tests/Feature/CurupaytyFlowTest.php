@@ -188,4 +188,42 @@ class CurupaytyFlowTest extends TestCase
         $response->assertRedirect('/admin/firmantes');
         $this->assertDatabaseMissing('firmante_actas', ['id' => $firmante->id]);
     }
+
+    public function test_admin_can_resend_email_to_firmante(): void
+    {
+        \Illuminate\Support\Facades\Mail::fake();
+
+        $admin = User::where('email', 'jucfra23@gmail.com')->first();
+        $this->assertNotNull($admin);
+
+        $testEmail = 'resend_' . uniqid() . '@test.com';
+        $user = User::create([
+            'name' => 'Firmante Reenvio',
+            'email' => $testEmail,
+            'password' => bcrypt('secret'),
+        ]);
+
+        $firmante = FirmanteActa::create([
+            'user_id' => $user->id,
+            'nombre' => 'Firmante',
+            'apellido' => 'Reenvio',
+            'cedula' => (string) rand(5000000, 5999999),
+            'telefono' => '0981999888',
+            'ciudad' => 'Asunción',
+            'direccion' => 'Test',
+            'instrumento' => 'Cello',
+            'sueno_musical' => 'Test',
+            'firma_digital' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAA=',
+            'codigo_verificacion' => 'CPY-RESEND-01',
+            'estado' => 'pendiente_asamblea',
+        ]);
+
+        $response = $this->actingAs($admin)->post("/admin/firmantes/{$firmante->id}/reenviar-correo");
+        $response->assertStatus(302);
+        $response->assertSessionHas('success');
+
+        \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\ActaFundacionalFirmadaMail::class, function ($mail) use ($testEmail) {
+            return $mail->hasTo($testEmail) && !empty($mail->temporaryPassword);
+        });
+    }
 }

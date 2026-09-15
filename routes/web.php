@@ -47,6 +47,8 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::get('/firmantes/{id}', [FirmantesController::class, 'show'])->name('firmantes.show');
     Route::post('/firmantes/{id}/estado', [FirmantesController::class, 'updateEstado'])->name('firmantes.update_status');
     Route::post('/firmantes/{id}/update-estado', [FirmantesController::class, 'updateEstado'])->name('firmantes.update_estado');
+    Route::post('/firmantes/{id}/reenviar-correo', [FirmantesController::class, 'reenviarCorreo'])->name('firmantes.reenviar_correo');
+    Route::post('/firmantes/{id}/reenviar-email', [FirmantesController::class, 'reenviarCorreo'])->name('firmantes.reenviar-correo');
     Route::delete('/firmantes/{id}', [FirmantesController::class, 'destroy'])->name('firmantes.destroy');
 
     // Roles y Permisos
