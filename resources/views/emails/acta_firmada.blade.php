@@ -40,18 +40,62 @@
                     <tr>
                         <td style="padding: 35px 35px 25px;">
                             
-                            <h2 style="margin: 0 0 15px; font-size: 20px; color: #ffffff; font-weight: 700;">
-                                ¡Bienvenido/a, {{ $firmante->nombre }} {{ $firmante->apellido }}!
+                            <h2 style="margin: 0 0 15px; font-size: 22px; color: #ffffff; font-weight: 800; letter-spacing: 0.02em;">
+                                ¡Muchas gracias por firmar el Acta, {{ $firmante->nombre }}!
                             </h2>
 
+                            <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: #cbd5e1;">
+                                Agradecemos profundamente tu adhesión y compromiso histórico con la creación del <strong>Ensamble Curupayty · Atypu</strong>. Tu firma forma parte del grupo pionero de músicos y adherentes que dan vida a esta comunidad soberana.
+                            </p>
+
                             <p style="margin: 0 0 20px; font-size: 15px; line-height: 1.7; color: #cbd5e1;">
-                                Tu adhesión solemne al <strong>Acta Fundacional del Ensamble Curupayty · Atypu</strong> ha sido asentada formalmente en nuestro padrón oficial bajo el código de verificación único:
+                                Tu registro formal ha sido asentado en el padrón oficial bajo el siguiente código de verificación:
                             </p>
 
                             <!-- Código Destacado -->
                             <div style="background-color: #090c12; border: 1px solid #e5a93c; border-radius: 8px; padding: 14px 20px; text-align: center; margin-bottom: 25px;">
                                 <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 4px;">Código de Verificación Oficial:</span>
-                                <span style="font-size: 20px; font-weight: 800; color: #f6d28b; font-family: monospace; letter-spacing: 0.15em;">{{ $firmante->codigo_verificacion }}</span>
+                                <span style="font-size: 22px; font-weight: 800; color: #f6d28b; font-family: monospace; letter-spacing: 0.15em;">{{ $firmante->codigo_verificacion }}</span>
+                            </div>
+
+                            <!-- Credenciales de Acceso al Sistema -->
+                            <div style="background: linear-gradient(145deg, #141b27, #0c1017); border: 1px solid #e5a93c; border-radius: 10px; padding: 22px 24px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+                                <div style="font-size: 15px; font-weight: 800; color: #f6d28b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">
+                                    🔐 Credenciales de Acceso al Sistema
+                                </div>
+                                <p style="margin: 0 0 14px; font-size: 13px; color: #94a3b8; line-height: 1.6;">
+                                    Hemos creado tu cuenta de usuario para que puedas ingresar al sistema, acceder a partituras exclusivas, actas y participar en la gestión de la comunidad:
+                                </p>
+                                <table border="0" cellpadding="8" cellspacing="0" width="100%" style="background-color: #080b10; border-radius: 6px; border: 1px dashed rgba(229,169,60,0.4); margin-bottom: 15px; font-size: 13px;">
+                                    <tr>
+                                        <td width="38%" style="color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>Usuario / Correo:</strong></td>
+                                        <td style="color: #ffffff; font-family: monospace; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.05);">{{ $firmante->user->email ?? $firmante->email }}</td>
+                                    </tr>
+                                    @if(isset($temporaryPassword) && $temporaryPassword)
+                                    <tr>
+                                        <td style="color: #94a3b8;"><strong>Clave Única de Acceso:</strong></td>
+                                        <td style="color: #f6d28b; font-family: monospace; font-size: 15px; font-weight: 800; letter-spacing: 0.1em;">
+                                            <span style="background-color: rgba(229,169,60,0.15); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(229,169,60,0.3); display: inline-block;">
+                                                {{ $temporaryPassword }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                </table>
+                                <p style="margin: 0 0 16px; font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+                                    <strong style="color: #e5a93c;">* Importante:</strong> Esta clave única de acceso es provisional. Por tu seguridad, podrás cambiarla fácilmente al ingresar a tu perfil.
+                                </p>
+                                <div style="text-align: center;">
+                                    <a href="{{ route('login') }}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #e5a93c, #cf9128); color: #07090c; font-weight: 800; font-size: 13px; text-decoration: none; padding: 11px 26px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.06em;">
+                                        Ingresar al Sistema →
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Aviso de WhatsApp Obligatorio -->
+                            <div style="background-color: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.35); border-radius: 8px; padding: 14px 18px; margin-bottom: 25px; font-size: 13px; color: #e2e8f0; line-height: 1.6;">
+                                <strong style="color: #25d366; font-size: 14px;">💬 Contacto y Grupo Oficial de WhatsApp</strong><br>
+                                Tu número telefónico <strong>{{ $firmante->telefono ?? 'Registrado' }}</strong> ha sido validado satisfactoriamente. Te incorporaremos al grupo oficial de WhatsApp para coordinar la primera asamblea y los ensayos del ensamble.
                             </div>
 
                             <!-- Resumen del Registro -->
@@ -59,6 +103,10 @@
                                 <tr>
                                     <td width="40%" style="color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>Cédula de Identidad:</strong></td>
                                     <td style="color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.05);">{{ $firmante->cedula }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>Celular / WhatsApp:</strong></td>
+                                    <td style="color: #25d366; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.05);">{{ $firmante->telefono ?? 'No especificado' }}</td>
                                 </tr>
                                 <tr>
                                     <td style="color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>Instrumento / Disciplina:</strong></td>

@@ -15,6 +15,7 @@ class FirmanteActa extends Model
         'nombre',
         'apellido',
         'cedula',
+        'telefono',
         'direccion',
         'ciudad',
         'instrumento',
@@ -54,10 +55,5 @@ class FirmanteActa extends Model
     public function getEmailAttribute(): ?string
     {
         return $this->user ? $this->user->email : null;
-    }
-
-    public function getTelefonoAttribute(): ?string
-    {
-        return null;
     }
 }

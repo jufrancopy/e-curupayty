@@ -30,6 +30,7 @@ class LandingController extends Controller
             'nombre' => 'required|string|max:100',
             'apellido' => 'required|string|max:100',
             'cedula' => 'required|string|max:30|unique:firmante_actas,cedula',
+            'telefono' => 'required|string|max:40',
             'email' => 'required|email|max:150|unique:users,email',
             'direccion' => 'required|string|max:200',
             'ciudad' => 'required|string|max:100',
@@ -39,15 +40,17 @@ class LandingController extends Controller
         ], [
             'cedula.unique' => 'Este número de cédula ya se encuentra registrado en el Acta Fundacional.',
             'email.unique' => 'Este correo electrónico ya está registrado en el sistema.',
+            'telefono.required' => 'El número de teléfono celular es obligatorio para coordinar la asamblea e incorporarte al grupo oficial.',
             'firma_digital.required' => 'Por favor, dibuje su firma táctil en el recuadro antes de continuar.',
         ]);
 
-        // 1. Crear usuario en el sistema
-        $password = $request->input('password') ?: 'curupayty2026';
+        // 1. Generar clave de acceso temporal única para el usuario
+        $generatedPassword = 'CPY-' . rand(1000, 9999) . '!' . strtoupper(Str::random(3));
+        
         $user = User::create([
             'name' => "{$validated['nombre']} {$validated['apellido']}",
             'email' => $validated['email'],
-            'password' => Hash::make($password),
+            'password' => Hash::make($generatedPassword),
         ]);
 
         // 2. Asignar rol firmante
@@ -64,6 +67,7 @@ class LandingController extends Controller
             'nombre' => $validated['nombre'],
             'apellido' => $validated['apellido'],
             'cedula' => $validated['cedula'],
+            'telefono' => $validated['telefono'],
             'direccion' => $validated['direccion'],
             'ciudad' => $validated['ciudad'],
             'instrumento' => $validated['instrumento'],
@@ -75,9 +79,9 @@ class LandingController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
-        // 4. Enviar Acta Oficial con Certificado Gráfico por Correo
+        // 4. Enviar Acta Oficial con Agradecimiento y Credenciales de Acceso por Correo
         try {
-            Mail::to($user->email)->send(new ActaFundacionalFirmadaMail($firmante));
+            Mail::to($user->email)->send(new ActaFundacionalFirmadaMail($firmante, $generatedPassword));
         } catch (\Exception $e) {
             Log::error("Error al enviar correo del acta firmada a {$user->email}: " . $e->getMessage());
         }

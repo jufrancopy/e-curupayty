@@ -142,10 +142,17 @@
                             </div>
                         </div>
 
-                        <div class="form-grid-2">
+                        <div class="form-grid-3">
                             <div class="form-group">
                                 <label class="form-label" for="cedula">Cédula de Identidad *</label>
                                 <input type="text" name="cedula" id="cedula" class="form-control" value="{{ old('cedula') }}" placeholder="Ej: 4.852.190" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="telefono">
+                                    <i class="fab fa-whatsapp" style="color: #25D366;"></i> Celular / WhatsApp (Obligatorio) *
+                                </label>
+                                <input type="tel" name="telefono" id="telefono" class="form-control" value="{{ old('telefono') }}" placeholder="Ej: 0981 123456" required>
+                                <small style="font-size:0.72rem; color:var(--text-muted); display:block; margin-top:3px;">Requerido para coordinar la asamblea e incorporarte al grupo oficial.</small>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="email">Correo Electrónico (será tu usuario oficial) *</label>
@@ -794,6 +801,19 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.25rem;
+    }
+
+    .form-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr 1fr;
+        gap: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid-3 {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
     }
 
     .form-group {

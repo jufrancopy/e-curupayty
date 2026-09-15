@@ -17,13 +17,15 @@ class ActaFundacionalFirmadaMail extends Mailable
 
     public FirmanteActa $firmante;
     public string $imagePath;
+    public ?string $temporaryPassword;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(FirmanteActa $firmante)
+    public function __construct(FirmanteActa $firmante, ?string $temporaryPassword = null)
     {
         $this->firmante = $firmante;
+        $this->temporaryPassword = $temporaryPassword;
         
         // Generar o recuperar la imagen de alta resolución del Acta
         $service = new ActaImageService();
@@ -50,6 +52,7 @@ class ActaFundacionalFirmadaMail extends Mailable
             with: [
                 'firmante' => $this->firmante,
                 'imagePath' => $this->imagePath,
+                'temporaryPassword' => $this->temporaryPassword,
             ],
         );
     }

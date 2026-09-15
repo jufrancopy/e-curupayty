@@ -42,12 +42,15 @@ class CurupaytyFlowTest extends TestCase
     public function test_touch_signature_submission(): void
     {
         $sampleSignatureBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAAgCAYAAABzOcvDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA';
+        $testCedula = (string) rand(4000000, 4999999);
+        $testEmail = 'maria_' . uniqid() . '@test.com';
 
         $response = $this->post('/firma-acta', [
             'nombre' => 'María',
             'apellido' => 'Benítez',
-            'cedula' => '4987654',
-            'email' => 'maria.benitez@test.com',
+            'cedula' => $testCedula,
+            'telefono' => '0981123456',
+            'email' => $testEmail,
             'direccion' => 'Av. Mariscal López 1250',
             'ciudad' => 'San Lorenzo',
             'instrumento' => 'Violín Primero',
@@ -58,15 +61,36 @@ class CurupaytyFlowTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('firmante_actas', [
-            'cedula' => '4987654',
+            'cedula' => $testCedula,
             'nombre' => 'María',
             'apellido' => 'Benítez',
+            'telefono' => '0981123456',
             'instrumento' => 'Violín Primero',
         ]);
 
         $this->assertDatabaseHas('users', [
-            'email' => 'maria.benitez@test.com',
+            'email' => $testEmail,
         ]);
+    }
+
+    public function test_touch_signature_requires_telefono(): void
+    {
+        $sampleSignatureBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAAAgCAYAAABzOcvDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA';
+
+        $response = $this->post('/firma-acta', [
+            'nombre' => 'Pedro',
+            'apellido' => 'Gómez',
+            'cedula' => '3334445',
+            // Sin teléfono
+            'email' => 'pedro.gomez@test.com',
+            'direccion' => 'Iturbe 890',
+            'ciudad' => 'Asunción',
+            'instrumento' => 'Flauta Traversa',
+            'sueno_musical' => 'Crear una escuela de música.',
+            'firma_digital' => $sampleSignatureBase64,
+        ]);
+
+        $response->assertSessionHasErrors(['telefono']);
     }
 
     public function test_touch_signature_sends_email_with_certificate(): void
@@ -81,6 +105,7 @@ class CurupaytyFlowTest extends TestCase
             'nombre' => 'Rodrigo',
             'apellido' => 'Vargas',
             'cedula' => $testCedula,
+            'telefono' => '0971987654',
             'email' => $testEmail,
             'direccion' => 'Palma 450',
             'ciudad' => 'Asunción',
@@ -92,11 +117,12 @@ class CurupaytyFlowTest extends TestCase
         $response->assertStatus(302);
 
         \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\ActaFundacionalFirmadaMail::class, function ($mail) use ($testEmail) {
-            return $mail->hasTo($testEmail);
+            return $mail->hasTo($testEmail) && !empty($mail->temporaryPassword);
         });
 
         $firmante = FirmanteActa::where('cedula', $testCedula)->first();
         $this->assertNotNull($firmante);
+        $this->assertEquals('0971987654', $firmante->telefono);
 
         // Test downloading certificate image
         $downloadResponse = $this->get("/acta/{$firmante->codigo_verificacion}/imagen");
