@@ -116,7 +116,7 @@
                 <p style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 0.85rem; line-height: 1.5;">
                     Reenvía el Acta Fundacional oficial junto al certificado gráfico en alta resolución y una nueva clave única provisional de acceso al sistema (destinatario: <strong>{{ $firmante->user->email ?? $firmante->email ?? 'No registrado' }}</strong>).
                 </p>
-                <form action="{{ route('admin.firmantes.reenviar_correo', $firmante->id) }}" method="POST" onsubmit="return confirm('¿Reenviar correo oficial a {{ addslashes($firmante->user->email ?? $firmante->email ?? $firmante->nombre_completo) }}?');">
+                <form action="{{ route('admin.firmantes.reenviar_correo', $firmante->id) }}" method="POST" data-confirm="¿Deseas reenviar el Acta Fundacional oficial y credenciales a <strong>{{ addslashes($firmante->user->email ?? $firmante->email ?? $firmante->nombre_completo) }}</strong>?" data-title="Reenviar Notificación & Credenciales" data-btn="Sí, reenviar correo" data-icon="info">
                     @csrf
                     <button type="submit" class="btn btn-block" style="background: #0284c7; color: #fff; border: none; padding: 0.65rem; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                         <i class="fas fa-paper-plane"></i> Reenviar Acta y Credenciales
@@ -129,7 +129,7 @@
             <div class="danger-zone" style="background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.25); border-radius:8px; padding:1.2rem;">
                 <h4 style="color:#ef4444; font-size:0.9rem; margin-bottom:0.4rem;"><i class="fas fa-exclamation-triangle"></i> Zona de Peligro</h4>
                 <p style="font-size:0.8rem; color:#cbd5e1; margin-bottom:0.85rem;">Elimina esta firma y su certificado del padrón oficial permanentemente.</p>
-                <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente la firma de {{ addslashes($firmante->nombre_completo) }} (CI: {{ $firmante->cedula }})? Esta acción no se puede deshacer.');">
+                <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" data-confirm="¿Estás seguro de que deseas eliminar permanentemente la firma de <strong>{{ addslashes($firmante->nombre_completo) }}</strong> (CI: {{ $firmante->cedula }})? Esta acción es irreversible." data-title="¿Eliminar Firma del Padrón?" data-btn="Sí, eliminar definitivamente" data-danger="true" data-icon="warning">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-block" style="background:#dc2626; color:#fff; border:none; padding:0.6rem; border-radius:6px; font-weight:600; cursor:pointer; width:100%; transition:background 0.2s;">

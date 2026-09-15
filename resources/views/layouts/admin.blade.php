@@ -401,6 +401,183 @@
         </div>
     </div>
 
+    <!-- SweetAlert2 Modern Dark/Gold Alert Suite -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .curupayty-swal-popup {
+            background: #0d1118 !important;
+            border: 1px solid rgba(229, 169, 60, 0.45) !important;
+            border-radius: 14px !important;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(229, 169, 60, 0.15) !important;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            padding: 1.8rem 1.5rem !important;
+        }
+        .curupayty-swal-popup .swal2-title {
+            color: #f6d28b !important;
+            font-size: 1.3rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.02em !important;
+            margin-bottom: 0.8rem !important;
+        }
+        .curupayty-swal-popup .swal2-html-container {
+            color: #cbd5e1 !important;
+            font-size: 0.95rem !important;
+            line-height: 1.6 !important;
+            margin: 0.5rem 0 1.5rem !important;
+        }
+        .curupayty-swal-popup .swal2-html-container strong {
+            color: #ffffff !important;
+        }
+        .curupayty-swal-actions {
+            gap: 0.75rem !important;
+            margin-top: 0.5rem !important;
+        }
+        .curupayty-swal-gold-btn {
+            background: linear-gradient(135deg, #e5a93c, #cf9128) !important;
+            color: #07090c !important;
+            font-weight: 800 !important;
+            font-size: 0.88rem !important;
+            letter-spacing: 0.04em !important;
+            padding: 0.65rem 1.4rem !important;
+            border-radius: 7px !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+            box-shadow: 0 4px 14px rgba(229, 169, 60, 0.35) !important;
+        }
+        .curupayty-swal-gold-btn:hover {
+            box-shadow: 0 0 20px rgba(229, 169, 60, 0.6) !important;
+            transform: translateY(-1px) !important;
+        }
+        .curupayty-swal-danger-btn {
+            background: #dc2626 !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 0.88rem !important;
+            padding: 0.65rem 1.4rem !important;
+            border-radius: 7px !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4) !important;
+        }
+        .curupayty-swal-danger-btn:hover {
+            background: #b91c1c !important;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6) !important;
+            transform: translateY(-1px) !important;
+        }
+        .curupayty-swal-cancel-btn {
+            background: #18202e !important;
+            color: #94a3b8 !important;
+            font-weight: 600 !important;
+            font-size: 0.88rem !important;
+            padding: 0.65rem 1.2rem !important;
+            border-radius: 7px !important;
+            border: 1px solid #334155 !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+        }
+        .curupayty-swal-cancel-btn:hover {
+            background: #253349 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Auto-convert any legacy form with onsubmit="return confirm(...)"
+            document.querySelectorAll('form[onsubmit*="confirm"]').forEach(form => {
+                const rawOnsubmit = form.getAttribute('onsubmit') || '';
+                const match = rawOnsubmit.match(/confirm\(['"](.*?)['"]\)/);
+                const msg = match ? match[1] : '¿Estás seguro de continuar con esta acción?';
+                form.removeAttribute('onsubmit');
+                form.setAttribute('data-confirm', msg);
+                
+                if (/eliminar|delete|borrar/i.test(msg)) {
+                    form.setAttribute('data-danger', 'true');
+                    form.setAttribute('data-title', '¿Eliminar Registro?');
+                    form.setAttribute('data-btn', 'Sí, eliminar definitivamente');
+                    form.setAttribute('data-icon', 'warning');
+                } else if (/reenviar|correo|email/i.test(msg)) {
+                    form.setAttribute('data-title', 'Reenviar Acta Fundacional');
+                    form.setAttribute('data-btn', 'Sí, enviar ahora');
+                    form.setAttribute('data-icon', 'info');
+                }
+            });
+
+            // 2. Intercept forms with data-confirm
+            document.addEventListener('submit', function(e) {
+                const form = e.target;
+                if (form && form.hasAttribute('data-confirm')) {
+                    e.preventDefault();
+                    const text = form.getAttribute('data-confirm');
+                    const title = form.getAttribute('data-title') || 'Confirmación Oficial';
+                    const isDanger = form.getAttribute('data-danger') === 'true';
+                    const icon = form.getAttribute('data-icon') || (isDanger ? 'warning' : 'question');
+                    const confirmBtn = form.getAttribute('data-btn') || (isDanger ? 'Sí, eliminar' : 'Sí, confirmar');
+
+                    Swal.fire({
+                        title: title,
+                        html: text,
+                        icon: icon,
+                        showCancelButton: true,
+                        confirmButtonText: confirmBtn,
+                        cancelButtonText: 'Cancelar',
+                        buttonsStyling: false,
+                        backdrop: 'rgba(5, 7, 10, 0.85)',
+                        customClass: {
+                            popup: 'curupayty-swal-popup',
+                            confirmButton: isDanger ? 'curupayty-swal-danger-btn' : 'curupayty-swal-gold-btn',
+                            cancelButton: 'curupayty-swal-cancel-btn',
+                            actions: 'curupayty-swal-actions'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.removeAttribute('data-confirm');
+                            form.submit();
+                        }
+                    });
+                }
+            });
+
+            // 3. Modern Toasts for Laravel Flash Sessions
+            @if(session('success'))
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true,
+                    background: '#0d1118',
+                    color: '#f8fafc',
+                    iconColor: '#34d399',
+                    customClass: {
+                        popup: 'curupayty-swal-popup'
+                    }
+                });
+            @endif
+
+            @if(session('error'))
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: "{{ session('error') }}",
+                    showConfirmButton: false,
+                    timer: 6000,
+                    timerProgressBar: true,
+                    background: '#0d1118',
+                    color: '#f8fafc',
+                    iconColor: '#f87171',
+                    customClass: {
+                        popup: 'curupayty-swal-popup'
+                    }
+                });
+            @endif
+        });
+    </script>
+
     @stack('scripts')
 </body>
 </html>

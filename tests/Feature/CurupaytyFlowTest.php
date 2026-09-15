@@ -214,7 +214,7 @@ class CurupaytyFlowTest extends TestCase
             'instrumento' => 'Cello',
             'sueno_musical' => 'Test',
             'firma_digital' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAA=',
-            'codigo_verificacion' => 'CPY-RESEND-01',
+            'codigo_verificacion' => 'CPY-RESEND-' . strtoupper(\Illuminate\Support\Str::random(4)),
             'estado' => 'pendiente_asamblea',
         ]);
 

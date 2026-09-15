@@ -107,13 +107,13 @@
                                             <i class="fas {{ $firmante->estado_adhesion == 'verificado' ? 'fa-undo' : 'fa-check' }}"></i>
                                         </button>
                                     </form>
-                                    <form action="{{ route('admin.firmantes.reenviar_correo', $firmante->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Reenviar correo del Acta Fundacional y credenciales a {{ addslashes($firmante->user->email ?? $firmante->email ?? $firmante->nombre_completo) }}?');">
+                                    <form action="{{ route('admin.firmantes.reenviar_correo', $firmante->id) }}" method="POST" style="display:inline;" data-confirm="¿Deseas reenviar el Acta Fundacional oficial y credenciales a <strong>{{ addslashes($firmante->user->email ?? $firmante->email ?? $firmante->nombre_completo) }}</strong>?" data-title="Reenviar Notificación & Credenciales" data-btn="Sí, reenviar correo" data-icon="info">
                                         @csrf
                                         <button type="submit" class="btn-action-icon btn-email" title="Reenviar Acta y Credenciales">
                                             <i class="fas fa-paper-plane"></i>
                                         </button>
                                     </form>
-                                    <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente la firma de {{ addslashes($firmante->nombre_completo) }} (CI: {{ $firmante->cedula }})?');">
+                                    <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" style="display:inline;" data-confirm="¿Estás seguro de que deseas eliminar permanentemente la firma de <strong>{{ addslashes($firmante->nombre_completo) }}</strong> (CI: {{ $firmante->cedula }})? Esta acción no se puede deshacer." data-title="¿Eliminar Firma del Padrón?" data-btn="Sí, eliminar definitivamente" data-danger="true" data-icon="warning">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-action-icon btn-delete" title="Eliminar Firma">

@@ -230,6 +230,19 @@
                             </div>
                         </div>
 
+                        <!-- CLÁUSULA DE HOMOLOGACIÓN Y SALVAGUARDA COMUNITARIA -->
+                        <div class="salvaguarda-box" style="margin: 1.5rem 0 1.25rem; background: rgba(229,169,60,0.04); border: 1px solid rgba(229,169,60,0.25); border-radius: 8px; padding: 1.15rem 1.25rem;">
+                            <div style="display: flex; gap: 0.85rem; align-items: flex-start;">
+                                <input type="checkbox" id="check_salvaguarda" name="terminos_salvaguarda" required checked style="margin-top: 0.25rem; accent-color: #e5a93c; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0;">
+                                <label for="check_salvaguarda" style="font-size: 0.83rem; color: #cbd5e1; line-height: 1.6; cursor: pointer;">
+                                    <strong style="color: #f6d28b; font-size: 0.88rem; display: block; margin-bottom: 0.2rem;">
+                                        <i class="fas fa-balance-scale"></i> Cláusula de Homologación & Salvaguarda Comunitaria *
+                                    </strong>
+                                    Declaro bajo fe de juramento la veracidad de los datos consignados y acepto que la presente adhesión al Acta Fundacional constituye una postulación sujeta a la revisión, validación y homologación soberana de la <strong>Comisión Fundacional y la Asamblea Constituyente del Ensamble Curupayty · Atypu</strong>, la cual se reserva expresamente el derecho estatutario de admisión, ratificación o revocación de miembros para salvaguardar los principios éticos, artísticos y la convivencia armónica de la orquesta.
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="form-submit-wrap">
                             <button type="submit" class="btn-submit-acta" id="btnSubmitForm">
                                 <i class="fas fa-stamp"></i> REGISTRAR Y ESTAMPAR FIRMA OFICIAL
