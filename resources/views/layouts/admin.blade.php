@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <style>
         :root {
             --bg-dark: #07090c;
@@ -150,43 +153,51 @@
 
         .btn-gold {
             background: linear-gradient(135deg, #e5a93c, #cf9128);
-            color: #07090c;
+            color: #07090c !important;
             font-weight: 700;
             font-size: 0.88rem;
             padding: 0.55rem 1.15rem;
-            border-radius: 6px;
+            border-radius: 8px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.45rem;
             border: none;
             cursor: pointer;
-            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(229, 169, 60, 0.25);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .btn-gold:hover {
-            background: #f39c12;
-            color: #000;
+            background: linear-gradient(135deg, #f59e0b, #e5a93c);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(229, 169, 60, 0.4);
         }
 
         .btn-sm {
-            padding: 0.35rem 0.75rem;
-            font-size: 0.8rem;
+            padding: 0.4rem 0.85rem;
+            font-size: 0.82rem;
+            border-radius: 6px;
         }
 
         .btn-outline {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.03);
             color: var(--text-secondary);
             border: 1px solid var(--border-color);
             padding: 0.55rem 1.15rem;
-            border-radius: 6px;
+            border-radius: 8px;
             text-decoration: none;
             font-size: 0.88rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
             cursor: pointer;
             transition: all 0.2s;
         }
         .btn-outline:hover {
+            background: rgba(229, 169, 60, 0.08);
             border-color: var(--accent-gold);
             color: var(--accent-gold);
+            transform: translateY(-1px);
         }
 
         /* Tablas */

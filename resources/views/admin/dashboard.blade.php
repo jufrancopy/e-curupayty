@@ -113,9 +113,18 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.firmantes.show', $f->id) }}" class="btn btn-outline btn-xs" title="Ver Detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                                        <a href="{{ route('admin.firmantes.show', $f->id) }}" class="btn-action-view" title="Ver Expediente">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <form action="{{ route('admin.firmantes.destroy', $f->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Eliminar la firma de {{ addslashes($f->nombre_completo) }}?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-action-delete" title="Eliminar Firma">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
@@ -157,14 +166,29 @@
 
             <div class="quick-links">
                 <h3 class="quick-title">Herramientas Rápidas</h3>
-                <a href="{{ route('admin.firmantes.export') }}" class="btn btn-outline btn-block mb-2">
-                    <i class="fas fa-file-csv"></i> Exportar Padrón (CSV)
+                <a href="{{ route('admin.firmantes.export') }}" class="btn-quick-tool mb-2">
+                    <span class="quick-tool-icon" style="background:rgba(16,185,129,0.15); color:#34d399;"><i class="fas fa-file-csv"></i></span>
+                    <div class="quick-tool-text">
+                        <span class="quick-tool-title">Exportar Padrón</span>
+                        <span class="quick-tool-sub">Descargar planilla CSV / Excel</span>
+                    </div>
+                    <i class="fas fa-arrow-right quick-arrow"></i>
                 </a>
-                <a href="{{ route('admin.obras.create') }}" class="btn btn-outline btn-block mb-2">
-                    <i class="fas fa-plus-circle"></i> Registrar Nueva Obra
+                <a href="{{ route('admin.obras.create') }}" class="btn-quick-tool mb-2">
+                    <span class="quick-tool-icon" style="background:rgba(59,130,246,0.15); color:#60a5fa;"><i class="fas fa-plus-circle"></i></span>
+                    <div class="quick-tool-text">
+                        <span class="quick-tool-title">Registrar Nueva Obra</span>
+                        <span class="quick-tool-sub">Subir partituras y maquetas</span>
+                    </div>
+                    <i class="fas fa-arrow-right quick-arrow"></i>
                 </a>
-                <a href="{{ route('landing') }}" target="_blank" class="btn btn-outline btn-block">
-                    <i class="fas fa-external-link-alt"></i> Ver Sitio Público
+                <a href="{{ route('landing') }}" target="_blank" class="btn-quick-tool">
+                    <span class="quick-tool-icon" style="background:rgba(229,169,60,0.15); color:var(--admin-gold);"><i class="fas fa-external-link-alt"></i></span>
+                    <div class="quick-tool-text">
+                        <span class="quick-tool-title">Portal Web Público</span>
+                        <span class="quick-tool-sub">Ver página en vivo</span>
+                    </div>
+                    <i class="fas fa-arrow-right quick-arrow"></i>
                 </a>
             </div>
         </div>
@@ -332,6 +356,47 @@
 .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; }
 .badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
 
+.btn-action-view {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgba(229, 169, 60, 0.1);
+    border: 1px solid rgba(229, 169, 60, 0.3);
+    color: var(--admin-gold);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: all 0.2s;
+}
+.btn-action-view:hover {
+    background: var(--admin-gold);
+    color: #07090c;
+    box-shadow: 0 0 10px rgba(229, 169, 60, 0.4);
+}
+
+.btn-action-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.2s;
+}
+.btn-action-delete:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+}
+
 .inst-item {
     margin-bottom: 1rem;
 }
@@ -369,6 +434,57 @@
 }
 .mb-2 { margin-bottom: 0.6rem; }
 .btn-block { display: block; width: 100%; text-align: center; }
+
+.btn-quick-tool {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-quick-tool:hover {
+    background: rgba(229, 169, 60, 0.06);
+    border-color: rgba(229, 169, 60, 0.4);
+    transform: translateX(4px);
+}
+.quick-tool-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+.quick-tool-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.quick-tool-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+.quick-tool-sub {
+    font-size: 0.72rem;
+    color: var(--admin-muted);
+}
+.quick-arrow {
+    color: var(--admin-muted);
+    font-size: 0.75rem;
+    transition: transform 0.2s;
+}
+.btn-quick-tool:hover .quick-arrow {
+    color: var(--admin-gold);
+    transform: translateX(3px);
+}
 
 @media (max-width: 1024px) {
     .dashboard-grid {

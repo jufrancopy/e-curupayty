@@ -97,20 +97,20 @@
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <a href="{{ route('admin.firmantes.show', $firmante->id) }}" class="btn btn-outline btn-xs" title="Detalle Completo">
+                                    <a href="{{ route('admin.firmantes.show', $firmante->id) }}" class="btn-action-icon btn-view" title="Detalle Completo">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <form action="{{ route('admin.firmantes.update_status', $firmante->id) }}" method="POST" style="display:inline;">
                                         @csrf
-                                        <input type="hidden" name="estado_adhesion" value="{{ $firmante->estado_adhesion == 'verificado' ? 'pendiente' : 'verificado' }}">
-                                        <button type="submit" class="btn btn-outline btn-xs" title="{{ $firmante->estado_adhesion == 'verificado' ? 'Marcar Pendiente' : 'Validar Firma' }}">
+                                        <input type="hidden" name="estado" value="{{ $firmante->estado_adhesion == 'verificado' ? 'pendiente' : 'verificado' }}">
+                                        <button type="submit" class="btn-action-icon {{ $firmante->estado_adhesion == 'verificado' ? 'btn-undo' : 'btn-check' }}" title="{{ $firmante->estado_adhesion == 'verificado' ? 'Marcar Pendiente' : 'Validar Firma' }}">
                                             <i class="fas {{ $firmante->estado_adhesion == 'verificado' ? 'fa-undo' : 'fa-check' }}"></i>
                                         </button>
                                     </form>
                                     <form action="{{ route('admin.firmantes.destroy', $firmante->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente la firma de {{ addslashes($firmante->nombre_completo) }} (CI: {{ $firmante->cedula }})?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger-xs" title="Eliminar Firma">
+                                        <button type="submit" class="btn-action-icon btn-delete" title="Eliminar Firma">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </form>
@@ -226,22 +226,61 @@
 }
 .table-actions {
     display: flex;
-    gap: 0.35rem;
+    gap: 0.4rem;
+    align-items: center;
 }
-.btn-danger-xs {
-    background: transparent;
-    border: 1px solid rgba(239, 68, 68, 0.4);
-    color: #f87171;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+.btn-action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
     cursor: pointer;
-    font-size: 0.75rem;
     transition: all 0.2s;
+    background: transparent;
 }
-.btn-danger-xs:hover {
-    background: rgba(239, 68, 68, 0.15);
+.btn-view {
+    background: rgba(229, 169, 60, 0.1);
+    border: 1px solid rgba(229, 169, 60, 0.3);
+    color: var(--admin-gold);
+}
+.btn-view:hover {
+    background: var(--admin-gold);
+    color: #07090c;
+    box-shadow: 0 0 10px rgba(229, 169, 60, 0.4);
+}
+.btn-check {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+}
+.btn-check:hover {
+    background: #10b981;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+.btn-undo {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+.btn-undo:hover {
+    background: #f59e0b;
+    color: #000;
+}
+.btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+.btn-delete:hover {
+    background: #ef4444;
     border-color: #ef4444;
     color: #fff;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
 }
 .mt-3 { margin-top: 1.25rem; }
 </style>
